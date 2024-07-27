@@ -1,71 +1,79 @@
-import axios from 'axios';
-import React, { useContext } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
-import { login } from '../reducers/UserReducer';
-import { context } from '../Context/MainContext';
-import { useDispatch, useSelector } from 'react-redux';
-import { dbtoCart } from '../reducers/CartSlice';
+import axios from "axios";
+import React, { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { login } from "../reducers/UserReducer";
+import { context } from "../Context/MainContext";
+import { useDispatch, useSelector } from "react-redux";
+import { dbtoCart } from "../reducers/CartSlice";
 function Login() {
   const dispatcher = useDispatch();
   const navigator = useNavigate();
-  const {openToast} = useContext(context)
-// to import data of cart 
-  const cart = useSelector(store=>store.cart);
+  const { openToast } = useContext(context);
+  // to import data of cart
+  const cart = useSelector((store) => store.cart);
 
-  const loginHandler = (e)=>
-    {
+  const loginHandler = (e) => {
     e.preventDefault();
-    const data = 
-    {
+    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
+    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+    const data = {
       email: e.target.email.value,
       password: e.target.password.value,
     };
     axios.post("http://localhost:5000/user/login", data).then((success) => {
+      // console.log(adminEmail, adminPassword);
+      // console.log(data.email, data.password);
+
       if (success.data.status === 1) {
-          console.log(success.data.token),
-            dispatcher(
-              login({
-                token: success.data.token,
-                user: success.data.user,
-              })
-            );
-        // openToast(success.data.msg, "success");
-        stateToCart(success.data.user._id);
-        // e.target.reset();
-        navigator("/");
+        if (data.email === adminEmail && data.password === adminPassword) 
+          {
+          try {
+            // console.log("broooooooooooo")
+            navigator("/admin");
+          } catch (error) {
+            console.error("Error during authentication:", error);
+          }
+        } else {
+          dispatcher(
+            login({
+              token: success.data.token,
+              user: success.data.user,
+            })
+          );
+          stateToCart(success.data.user._id);
+          // e.target.reset();
+          navigator("/");
+        }
       } else {
         openToast(success.data.msg, "error");
       }
     });
-  }
-  // already agar without login data dala ho to vo add ho jaye login hone ke baad 
-  const stateToCart = (userId) => 
-  {
+  };
+  // already agar without login data dala ho to vo add ho jaye login hone ke baad
+  const stateToCart = (userId) => {
     axios
       .post("http://localhost:5000/cart/state-to-cart/" + userId, {
         state_cart: cart.data,
       })
       .then((success) => {
-        if(success.data.status===1){
-          let total = 0  ;
+        if (success.data.status === 1) {
+          let total = 0;
           // console.log(success.data.userCart)
-          const cartData = success.data.userCart.map(
-            (c)=>{
-              total += (c.pId.discount_price * c.qty);
-              return{
-                pId:c.pId._id,
-                qty:c.qty,
-              }
-            }
-          )
-          dispatcher(dbtoCart({data:cartData , total}));
+          const cartData = success.data.userCart.map((c) => {
+            total += c.pId.discount_price * c.qty;
+            return {
+              pId: c.pId._id,
+              qty: c.qty,
+            };
+          });
+          dispatcher(dbtoCart({ data: cartData, total }));
         }
       })
-      .catch((error) => {})
-  }
+      .catch((error) => {});
+  };
   return (
     <div>
-      <section className="bg-[#61677a]">
+      <section className="bg-[#61677a] h-screen">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a
             href="#"
@@ -75,7 +83,7 @@ function Login() {
           </a>
           <div className="w-full bg-[#272829] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 shad">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-400 md:text-2xl">
                 Log in to your account
               </h1>
               <form className="space-y-4 md:space-y-6" onSubmit={loginHandler}>
@@ -159,4 +167,4 @@ function Login() {
   );
 }
 
-export default Login
+export default Login;

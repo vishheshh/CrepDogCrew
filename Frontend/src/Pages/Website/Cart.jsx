@@ -52,7 +52,9 @@ function Cart() {
         .catch(() => {});
     }
   }
-  
+        useEffect(() => {
+          window.scrollTo(0, 0); // Scroll to the top when this component mounts
+        }, []);
   const navigator = useNavigate();
   const checkout=()=>{
     if(user.data!= null)
@@ -67,7 +69,7 @@ function Cart() {
   }
   return (
     <div className="w-full h-screen px-7">
-      <div className=" mt-32 relative overflow-auto bg-slate-100 rounded-3xl border border-gray-300 dp h-5/6 ">
+      <div className=" mt-32 relative overflow-auto bg-slate-100 rounded-3xl border border-gray-300 dp max-h-5/6 ">
         <table
           className="w-full text-sm text-left rtl:text-right text-gray-500 
         "

@@ -190,7 +190,7 @@ class OrderController {
 
 
     getOrders(url_query) {
-      console.log(url_query)
+      // console.log(url_query)
         return new Promise(
             async (res, rej) => {
                 try {

@@ -7,7 +7,11 @@ import "slick-carousel/slick/slick-theme.css";
 import ProductBox from "../../Components/Website/ProductBox";
 import Cookies from "js-cookie";
 
+
 function Store() {
+        useEffect(() => {
+          window.scrollTo(0, 0); // Scroll to the top when this component mounts
+        }, []);
   const { category_slug } = useParams();
   const [selColor, setSelColor] = useState(null);
   const [limit, setLimit] = useState(2);

@@ -8,10 +8,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import {gsap} from "gsap";
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CdcBox from "../../Components/Website/CdcBox";
-
+import landingbox from "../../Components/Website/landingbox";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,16 +36,20 @@ function Home() {
 
   useEffect(() => {
     fetchCategory();
-    console.log(Category);
-
+    // console.log(Category);
     fetchBestSeller();
   }, []);
-  const [limit, setLimit] = useState(2);
-  const [searchParams, setSearchParams] = useSearchParams();
+
 
   useEffect(() => {
-    fetchProduct(limit);    
+    const productLoader = async () => {
+      await fetchProduct();
+      // console.log(products); 
+    };
+
+    productLoader();
   }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -106,7 +110,6 @@ function Home() {
       </div>
     );
   };
-
   const PrevArrow = ({ onClick }) => {
     return (
       <div
@@ -130,15 +133,15 @@ function Home() {
     lazyLoad: "ondemand",
     swipe: true,
   };
-    const settings2 = {
-      // dots: true,
-      infinite: true,
-      speed: 0,
-      slidesToShow: 1,
-      autoplay: true,
-      autoplaySpeed: 300,
-      responsive: false,
-    };
+  const settings2 = {
+    // dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    autoplay: true,
+    autoplaySpeed: 300,
+    responsive: false,
+  };
 
   const textRef = useRef(null);
   const logos = useRef(null);
@@ -150,8 +153,7 @@ function Home() {
       { color: "#61677A" }, // Initial color
       {
         color: () => `#fff`,
-        scrollTrigger: 
-        {
+        scrollTrigger: {
           trigger: textRef.current,
           start: "top 50%",
           end: "top 30%",
@@ -172,14 +174,13 @@ function Home() {
         scrollTrigger: {
           trigger: logos.current,
           start: "top 60%",
-          end: "top 50%", 
-          scrub: true, 
-          // markers: true, 
+          end: "top 50%",
+          scrub: true,
+          // markers: true,
         },
       }
     );
   }, []);
-
 
   const splitText = (text) => {
     return text.split("").map((char, index) => (
@@ -189,24 +190,13 @@ function Home() {
     ));
   };
 
-useEffect(() => {
-  // Animate all product boxes with stagger effect
-  gsap.fromTo(
-    ".product-box",
-    { opacity: 0, y: 100 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 2,
-      stagger: 0.5,
-      ease: "power1.out",
-    }
-  );
-}, []);
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when this component mounts
+  }, []);
+
   return (
-    <div className="">
+    <div className="w-full">
       <div className="h-[130vh] w-full overflow-hidden bg-zinc-400 flex flex-col justify-center items-center">
-        {/* Video section */}
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
@@ -344,7 +334,7 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="w-5/6 h-[500px] bg-[#393D3F] p-5 rounded-3xl mx-auto flex items-center justify-center ">
+      {/* <div className="w-5/6 h-[500px] bg-[#393D3F] p-5 rounded-3xl mx-auto flex items-center justify-center ">
         <Slider
           {...settings2}
           className="w-1/2 lg:w-2/5 h-full flex items-center justify-center"
@@ -358,31 +348,36 @@ useEffect(() => {
               >
                 <div className="w-full h-full rounded-3xl ">
                   <img
-                      src={`${API_BASE_URL}${productImageUrl}${prod.image}`}
-                      alt={prod.name}
-                      className="w-full h-full object-cover absolute z-10 rounded-3xl dp object-center"
-                    />
+                    src={`${API_BASE_URL}${productImageUrl}${prod.image}`}
+                    alt={prod.name}
+                    className="w-full h-full object-cover absolute z-10 rounded-3xl dp object-center"
+                  />
                 </div>
               </NavLink>
             </div>
           ))}
         </Slider>
-        <div className="h-1/2 w-full mx-auto" style={{ fontFamily: "'Roboto', sans-serif" }}>
+        <div
+          className="h-1/2 w-full mx-auto"
+          style={{ fontFamily: "'Roboto', sans-serif" }}
+        >
           <h1 className="text-8xl md:text-9xl lg:text-[10rem] font-extrabold tracking-tighter leading-none">
             CREP DOG CREW
           </h1>
         </div>
-
-      </div>
+      </div> */}
+      {/* <landingbox /> */}
     </div>
   );
 }
 
 function BestSeller({ products }) {
   return (
-    <div className="max-w-[1280px] mx-auto lg:grid-cols-4 md:grid-cols-2 grid gap-5 mt-12 mb-32 place-items-center">
+    <div
+      className="max-w-[1280px] mx-auto lg:grid-cols-4 md:grid-cols-2 grid gap-5 mt-12 mb-32 place-items-center"
+    >
       {products.map((prod, index) => (
-        <ProductBox2 className="product-box" key={index} {...prod} />
+        <ProductBox2 class="" key={index} {...prod} />
       ))}
     </div>
   );

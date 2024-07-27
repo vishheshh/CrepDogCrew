@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { context } from "../../Context/MainContext";
 
 export default function MyOrder() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when this component mounts
+  }, []); 
   const { API_BASE_URL, productImageUrl } = useContext(context);
   const user = useSelector((store) => store.user);
   const navigator = useNavigate();

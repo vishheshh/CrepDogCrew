@@ -6,6 +6,9 @@ import axios from 'axios';
 import { emptyCart } from '../../reducers/CartSlice';
 import useRazorpay from "react-razorpay";
 function Checkout() {
+    useEffect(() => {
+      window.scrollTo(0, 0); // Scroll to the top when this component mounts
+    }, []);
   const { fetchProduct, products, productImageUrl, API_BASE_URL } =
     useContext(context);
     const [Razorpay] = useRazorpay();
@@ -119,9 +122,9 @@ function Checkout() {
         rzp1.open();
      }
   return (
-    <div className="w-full flex ">
-      <div className="w-1/2 h-screen px-2">
-        <div className=" mt-32 relative overflow-auto bg-slate-100 rounded-3xl border border-gray-300 dp h-5/6 ">
+    <div className="w-full flex flex-wrap">
+      <div className=" w-full md:w-1/2  max-h-screen px-2 mt-32 ">
+        <div className=" relative overflow-auto bg-slate-100 rounded-3xl border border-gray-300 dp h-5/6 ">
           <table
             className="w-full text-sm text-left rtl:text-right text-gray-500 
         "
@@ -186,8 +189,8 @@ function Checkout() {
           </table>
         </div>
       </div>
-      <div className="min-h-screen w-full flex items-center justify-center p-6">
-        <div className="bg-slate-200 text-gray-700 p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="min-h-screen w-full flex items-center justify-center md:mt-12 p-6 md:w-1/2">
+        <div className="bg-slate-200 text-gray-700 p-8 rounded-3xl shadow-lg w-full max-w-md">
           <h2 className="text-2xl font-semibold mb-6 text-center">
             Signup Form
           </h2>

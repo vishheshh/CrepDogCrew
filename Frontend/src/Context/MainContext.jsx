@@ -73,7 +73,7 @@ export default function mainContext(props)
       });
   };
   
-    //-------------------------bestsetller prod-----------------------------------------------------
+    //-------------------------bestsetller prod---------------------------------
     const[bestseller,setBestseller] = useState([]);
     const[bestsellerImgURl,setBestsellerImgURl] = useState([])
       const fetchBestSeller = async () => {

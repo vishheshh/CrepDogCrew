@@ -25,6 +25,7 @@ import { lsLogin } from "./reducers/UserReducer";
 import Checkout from "./Pages/Website/Checkout";
 import MyOrder from "./Pages/Website/MyOrder";
 import OrderPlaced from "./Pages/OrderPlaced";
+
 function App() {
   //means req should be sent with cookies
   // axios.defaults.withCredentials = true;
@@ -33,6 +34,7 @@ function App() {
     dispatcher(lsToCart());
     dispatcher(lsLogin());
   }, []);
+
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -110,7 +112,11 @@ function App() {
         },
       ],
     },
-  ]);
-  return <RouterProvider router={routes} />;
+  ]);  
+  return (
+    <>
+      <RouterProvider router={routes} />
+    </>
+  );
 }
-export default App;
+export default App; 

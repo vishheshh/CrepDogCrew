@@ -18,6 +18,9 @@ function Signup() {
       email: e.target.email.value,
       password: e.target.password.value,
     };
+
+
+
     axios.post("http://localhost:5000/user/register", data).then((success) => {
       if (success.data.status === 1) {
         dispatcher(

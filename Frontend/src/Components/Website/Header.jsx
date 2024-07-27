@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { FaRegUser, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
 import { IoCloseSharp } from "react-icons/io5";
@@ -10,36 +10,33 @@ import { logout } from "../../reducers/UserReducer";
 import { GiEgyptianProfile } from "react-icons/gi";
 import { emptyCart } from "../../reducers/CartSlice";
 
-function Header() 
-{
+function Header() {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [toggle, setToggle] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const menuItemsRef = useRef([]);
 
   const navigate = useNavigate();
   const cart = useSelector((store) => store.cart);
-  const user = useSelector(store=>store.user);
+  const user = useSelector((store) => store.user);
+  const dispatcher = useDispatch();
 
-  const dispatcher = useDispatch()
+  const handleProfileClick = () => {
+    if (!user.data) {
+      navigate("/login");
+    } else {
+      setIsOpen(!isOpen);
+    }
+  };
 
-//-------------------------------------------------------------------
-   const handleProfileClick = () => {
-     if (!user.data) {
-       navigate("/login");
-     } else {
-       setIsOpen(!isOpen);
-     }
-   };
-     const handleLogout = () => {
-       // Add your logout logic here
-       dispatcher(logout())
-       dispatcher(emptyCart())
-       console.log("Logging out...");
-       setIsOpen(false);
-     };
-//----------------------------------------------------------------------
+  const handleLogout = () => {
+    dispatcher(logout());
+    dispatcher(emptyCart());
+    console.log("Logging out...");
+    setIsOpen(false);
+  };
+
   useEffect(() => {
-  // console.log(user)
     let lastScrollTop = 0;
 
     const handleScroll = () => {
@@ -57,7 +54,6 @@ function Header()
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-
   const menuItems = [
     { name: "Home", url: "/" },
     { name: "Store", url: "/store" },
@@ -67,6 +63,17 @@ function Header()
     { name: "Care", url: "/care" },
     { name: "Collectibles", url: "/collectibles" },
   ];
+
+  useEffect(() => {
+    if (toggle) {
+      // Animate menu items when sidebar is opened
+      gsap.fromTo(
+        menuItemsRef.current,
+        { x: "-100%", opacity: 0 },
+        { x: "0%", opacity: 1, stagger: 0.1, duration: 0.5 }
+      );
+    }
+  }, [toggle]);
 
   return (
     <>
@@ -91,7 +98,7 @@ function Header()
                     <FaRegUser className="text-xl" />
                   </button>
                   {isOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-slate-300 rounded-md shadow-lg z-20 p-3 flex flex-col itmes-center justify-center ">
+                    <div className="absolute right-0 mt-2 w-48 bg-slate-300 rounded-md shadow-lg z-20 p-3 flex flex-col items-center justify-center ">
                       Hello {user.data.name} !!
                       <hr className="border border-black" />
                       <NavLink
@@ -129,7 +136,11 @@ function Header()
                     })}
                   </span>
                 </div>
-                <MdMenu size={24} onClick={() => setToggle(!toggle)} />
+                <MdMenu
+                  className="hover:rotate-90 ease-in-out "
+                  size={24}
+                  onClick={() => setToggle(!toggle)}
+                />
               </div>
             </span>
           </div>
@@ -184,14 +195,17 @@ function Header()
             </div>
             {menuItems.map((item, index) => (
               <Link key={index} to={item.url} onClick={() => setToggle(false)}>
-                <div className="menu-item text-white hover:text-blue-500 transition-colors duration-300">
+                <div
+                  ref={(el) => (menuItemsRef.current[index] = el)} // Assign ref for animation
+                  className="menu-item text-white hover:text-blue-500 transition-colors duration-300"
+                >
                   {item.name}
                 </div>
               </Link>
             ))}
             <IoCloseSharp
               onClick={() => setToggle(false)}
-              className="text-white cursor-pointer p-2 w-10 h-10 rounded-full bg-black dp hover: rotate-90"
+              className="text-white cursor-pointer p-2 w-10 h-10 rounded-full bg-black dp hover:rotate-90"
             />
           </div>
         </Container>

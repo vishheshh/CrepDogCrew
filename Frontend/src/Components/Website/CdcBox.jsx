@@ -16,8 +16,8 @@ const AnimatedWordsAndImages = () => {
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".animation-container",
-        start: "top 60%",
-        end: "bottom center",
+        start: "top 70%",
+        end: "bottom 40%",
         scrub: true,
         // markers: true, 
       },
@@ -57,7 +57,7 @@ const AnimatedWordsAndImages = () => {
     >
       <h1
         ref={crepRef}
-        className="text-8xl md:text-9xl lg:text-[10rem] font-extrabold tracking-tighter leading-none"
+        className=" text-8xl md:text-9xl lg:text-[10rem] font-extrabold tracking-tighter leading-none"
       >
         CREP
       </h1>
