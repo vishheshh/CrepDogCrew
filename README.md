@@ -110,6 +110,8 @@ The user panel is designed to provide a seamless shopping experience. Key featur
 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/CrepDogCrew.git
+
+```
 2. Navigate to the project directory and install dependencies:
 ```sh
 cd CrepDogCrew
