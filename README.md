@@ -84,7 +84,6 @@ The user panel is designed to provide a seamless shopping experience. Key featur
 - **Authentication:** JWT, Cryptx
 - **Payment Integration:** Razorpay API
 - **Build Tool:** Vite
-- **Deployment:** (Include deployment details if applicable)
 
 ### Future Scope
 
@@ -133,12 +132,6 @@ npm run build
 npm run start
 ```
 -This will start the application in production mode using the optimized build.
-
-7.Access the application:
-
--Open your web browser and navigate to http://localhost:3000 for the user panel.
-
--For the admin panel, navigate to http://localhost:3000/admin.
 
 ## Usage
 **1)Admin Panel:**
