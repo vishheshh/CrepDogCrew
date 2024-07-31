@@ -8,13 +8,9 @@ CrepDogCrew is a comprehensive sneaker e-commerce platform built using the MERN 
   - [Admin Panel](#admin-panel)
   - [User Panel](#user-panel)
 - [Technologies Used](#technologies-used)
+- [Future Scope](#future-scope)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Future Scope](#future-scope)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Features
 
 ### Admin Panel
 
@@ -80,6 +76,16 @@ The user panel is designed to provide a seamless shopping experience. Key featur
    - Lazy loading is implemented for videos on the landing page, ensuring fast loading times.
    - The entire platform is responsive, providing a seamless experience across devices.
 
+
+## Technologies Used
+
+- **Frontend:** React, Redux, Redux Toolkit, Vite, GSAP, ScrollTrigger, React Slick, React-Toastify, Dropzone
+- **Backend:** Node.js, Express.js, MongoDB, Mongoose
+- **Authentication:** JWT, Cryptx
+- **Payment Integration:** Razorpay API
+- **Build Tool:** Vite
+- **Deployment:** (Include deployment details if applicable)
+
 ### Future Scope
 
 1. **Enhanced Analytics Dashboard:**
@@ -99,15 +105,6 @@ The user panel is designed to provide a seamless shopping experience. Key featur
 
 6. **SEO Optimization:**
    - Improve SEO for better visibility on search engines, driving more traffic to the website.
-
-## Technologies Used
-
-- **Frontend:** React, Redux, Redux Toolkit, Vite, GSAP, ScrollTrigger, React Slick, React-Toastify, Dropzone
-- **Backend:** Node.js, Express.js, MongoDB, Mongoose
-- **Authentication:** JWT, Cryptx
-- **Payment Integration:** Razorpay API
-- **Build Tool:** Vite
-- **Deployment:** (Include deployment details if applicable)
 
 ## Installation
 
